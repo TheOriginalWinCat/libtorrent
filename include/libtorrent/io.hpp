@@ -97,7 +97,8 @@ namespace detail {
 			}
 		}
 
-		template <class OutIt>
+		template <class T, class OutIt, typename Cond
+			= typename std::enable_if<std::is_same<T, bool>::value>::value>
 		inline void write_impl(bool val, OutIt& start)
 		{ write_impl<std::uint8_t>(val ? 1 : 0, start); }
 

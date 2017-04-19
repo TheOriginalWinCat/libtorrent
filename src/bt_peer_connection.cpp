@@ -394,7 +394,7 @@ namespace libtorrent {
 #endif
 
 		send_message(msg_reject_request, counters::num_outgoing_reject, 0
-			, r.piece, r.start, r.length);
+			, static_cast<int>(r.piece), r.start, r.length);
 	}
 
 	void bt_peer_connection::write_allow_fast(piece_index_t const piece)
@@ -410,7 +410,8 @@ namespace libtorrent {
 
 		TORRENT_ASSERT(associated_torrent().lock()->valid_metadata());
 
-		send_message(msg_allowed_fast, counters::num_outgoing_allowed_fast, 0, piece);
+		send_message(msg_allowed_fast, counters::num_outgoing_allowed_fast, 0
+			, static_cast<int>(piece));
 	}
 
 	void bt_peer_connection::write_suggest(piece_index_t const piece)
@@ -432,7 +433,8 @@ namespace libtorrent {
 		}
 #endif
 
-		send_message(msg_suggest_piece, counters::num_outgoing_suggest, 0, piece);
+		send_message(msg_suggest_piece, counters::num_outgoing_suggest, 0
+			, static_cast<int>(piece));
 	}
 
 	void bt_peer_connection::get_specific_peer_info(peer_info& p) const
@@ -2004,7 +2006,7 @@ namespace libtorrent {
 		INVARIANT_CHECK;
 
 		send_message(msg_cancel, counters::num_outgoing_cancel, 0
-			, r.piece, r.start, r.length);
+			, static_cast<int>(r.piece), r.start, r.length);
 
 		if (!m_supports_fast) incoming_reject_request(r);
 	}
@@ -2014,7 +2016,7 @@ namespace libtorrent {
 		INVARIANT_CHECK;
 
 		send_message(msg_request, counters::num_outgoing_request, message_type_request
-			, r.piece, r.start, r.length);
+			, static_cast<int>(r.piece), r.start, r.length);
 	}
 
 	void bt_peer_connection::write_bitfield()
@@ -2292,7 +2294,8 @@ namespace libtorrent {
 		// there instead
 		if (!m_sent_bitfield) return;
 
-		send_message(msg_have, counters::num_outgoing_have, 0, index);
+		send_message(msg_have, counters::num_outgoing_have, 0
+			, static_cast<int>(index));
 	}
 
 	void bt_peer_connection::write_dont_have(piece_index_t const index)

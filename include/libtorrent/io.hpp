@@ -97,7 +97,7 @@ namespace detail {
 			}
 		}
 
-		template <class T, class OutIt>
+		template <class OutIt>
 		inline void write_impl(bool val, OutIt& start)
 		{ write_impl<std::uint8_t>(val ? 1 : 0, start); }
 

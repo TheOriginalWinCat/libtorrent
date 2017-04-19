@@ -286,6 +286,7 @@ namespace libtorrent {
 			char msg[5 + sizeof...(Args) * 4]
 				= { 0,0,0,1 + sizeof...(Args) * 4, static_cast<char>(type) };
 			char* ptr = msg + 5;
+			TORRENT_UNUSED(ptr);
 
 			int tmp[] = {0, (detail::write_int32(args, ptr), 0)...};
 			TORRENT_UNUSED(tmp);
